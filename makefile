@@ -14,12 +14,15 @@ seperate_folder: examples.o add.o main
 	mv examples.o example
 	mv add.o example
 
-main: examples.o add.o
-	$(CC) $(CFLAGS) -o main examples.o add.o
+main: namespaces.o add.o
+	$(CC) $(CFLAGS) -o main namespaces.o add.o
 
 
-examples.o: examples.cpp
-	$(CC) $(CFLAGS) -c examples.cpp
+examples.o: namespaces.cpp
+	$(CC) $(CFLAGS) -c namespaces.cpp
 
 add.o: add.cpp
 	$(CC) $(CFLAGS) -c add.cpp
+
+remove_obj: 
+	rm *.o
