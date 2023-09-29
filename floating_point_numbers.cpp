@@ -19,6 +19,28 @@ int main(){
 	std::cout << 6.7f << '\n';
 	std::cout << 9876543.21 << '\n';
 
+    //? std::cout normaly only displays 6 significant digits
+    std::cout << 9.87654321f << '\n';
+    std::cout << 987.654321f << '\n';
+    std::cout << 987654.321f << '\n';
+    std::cout << 9876543.21f << '\n';
+    std::cout << 0.0000987654321f << '\n';
+
+    //? we can cahnge this behavior with the function setprecision form iomanip library
+    //* setprecision is an output manipulator method that alters how data is output (sticky)
+    std::cout << std::setprecision(17);
+    std::cout <<"float: "<< 3.33333333333333333333333333333333333333f <<'\n'; // f suffix means float
+    std::cout <<"double: "<< 3.33333333333333333333333333333333333333 << '\n'; // no suffix means double
+
+    //Float has 7 digit precision
+    //the following output will be rounded because of that
+    float float_number{123456789.0};
+    std::cout << float_number << std::endl;
+
+    //double can have 16 digit precision 
+    //here we try to output 17 digit so double produces an approximate of the value
+    double double_number{0.1};
+    std::cout << double_number << std::endl;
     return 0;
 
 }
