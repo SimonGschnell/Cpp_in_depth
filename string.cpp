@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string> //header for std::string & std::getline
 
+using namespace std::string_literals; // access to std::string "s" suffix
+
 
 int main(){
 
@@ -36,8 +38,17 @@ int main(){
     std::cout << "your name - " << name << ", your color - " << color << std::endl;
 
     //? getting the length of a std::string
-    std::cout << "your name contains " << name.length() << " charactesr" << std::endl;
+    std::cout << "your name contains " << name.length() << " characters" << std::endl;
 
+    //! it's discouraged to pass std::string to functions by value because that would create an expensive copy
+    //? instead std::string_view is used for those situations
+
+    //? std::strings in returns are fine because they support a move semantic
+    //* objects that will be destroyed at the end of the function will be moved by value without making a copy
+    //! that is how rust handles move and copy semantics differently and optimized for it
+
+    std::cout << "this is a c-style string literal" << std::endl;
+    std::cout << "this is a std::string by suffix 's'"s;
 
     return 0;
 }
