@@ -26,10 +26,23 @@ namespace DifferentSpace {
     }
 }  
 
+//? we can split identifiers of a namespace over multiple files 
+//* when we include a std library we only include part of the std identifiers 
+// here we expand the Add_Namespace identifiers
+namespace Add_Namespace {
+    constexpr std::string_view namespace_name {"Add_Namespace"};
+}
+
+//? we can also nest namespaces
+namespace Level1 {
+    namespace Level2 {
+        int level {2};
+    }
+}
+
 //? we can decide which version we want to use in the main function with:
 //* the scope resolution operator
 //* using statements
-
 
 int main(){ 
 
@@ -42,6 +55,15 @@ int main(){
 
     //? using namespace identifiers from foreward declarations in header files
     std::cout << Add_Namespace::add(10,9) << std::endl;
+    //? splitted namespace identifiers from multiple files
+    std::cout << Add_Namespace::namespace_name << std::endl;
+
+    //? we can access nested namespaces by declaring the whole path
+    std::cout << Level1::Level2::level << std::endl;
+    //? or we can create a namespace alias
+    namespace LevelAlias = Level1::Level2;
+    //* with the alias we can omit the whole nested namespace path
+    std::cout << LevelAlias::level << std::endl;
 
     return 0;
 }
