@@ -1,8 +1,10 @@
 #include <iostream>
 #include "add_with_namespace.h"
 
+//! variables declared inside a namespace are also global variables
+
 int doSomething(int x, int y){
-    return x + y;
+    return x + y; 
 }
 
 //? user defined namespaces
