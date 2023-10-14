@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 
+//! identifiers with internal linkage can only collide with names
+//! in the same translation unit, not across the entire program.
+
 //! In modern C++, use of the static keyword for giving identifiers internal linkage is falling out of favor.
 //! Unnamed namespaces can give internal linkage to a wider range of identifiers
 
