@@ -5,9 +5,17 @@
  
 CC = g++
 CFLAGS = -Wall -g
+CDEF = -D NDEBUG
+COMP = -o main assert.cpp
+COMPDEP = assert.cpp
  
 # ****************************************************
 # Targets needed to bring the executable up to date
+build: $(COMPDEP) 
+	$(CC) $(CFLAGS) $(COMP)
+
+build_release: $(COMPDEP) 
+	$(CC) $(CFLAGS) $(CDEF) $(COMP)
  
 seperate_folder: examples.o add.o main
 	mkdir -p example
