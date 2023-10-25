@@ -1,5 +1,11 @@
 #include <iostream>
 #include <cstdint>
+#include <vector>
+#include <utility>
+
+//? using type aliases to make complex types easier to read
+using VecPairSI = std::vector<std::pair<std::string,int>>;
+VecPairSI vec;
 
 //! type aliases are commonly used for platform independent coding
 //? we can adapt the names of types to their sizes on different platforms
