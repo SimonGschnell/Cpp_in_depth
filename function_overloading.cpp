@@ -28,7 +28,24 @@ int main(){
     std::cout << add(4,8) << std::endl;
     std::cout << add(4,8,2) << std::endl;
     std::cout << add(0.5, 8.3) << std::endl;
-
+    
+    //? funciton overload resolution
+    //? when the compiler tries to resolve a function call to an overloaded function 
+    //? it goes through different steps to find the most appropriate overload
+    //* steps:
+    // exact match (convertion to const & references are seen as exact matches)
+    // numeric promotion
+    // numeric conversion
+    // user defined conversion
+    // ellipsis
+    //! if no match was found throughout the steps, the compiler errors
+    //! if multiple matches were found in the same step, the compiler also errors with ambiguous match
+    #if 0
+    //? error occurs because long can be numerically converted to int and double in the same funciton overload resolution step
+    std::cout << add(3L , 1L) << std::endl; // compiler error - more than one overloaded function matches the argument list
+    #endif
+    //? to avoid ambiguous function overloadin resolution, static_casts are used to match an exact function
+    std::cout << add(static_cast<int>(3L) , static_cast<int>(1L)) << std::endl;
     return 0;
 }
 
