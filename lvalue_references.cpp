@@ -1,5 +1,8 @@
 #include <iostream>
 
+//? References provide a safer way to work with data and are often used for function parameters
+//* pointers on the other hand are used more for scenarios where you need to manage memory directly
+
 int main (){
 
     //? lvalue references can only be bound to modifiable lvalues
