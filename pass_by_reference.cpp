@@ -32,6 +32,9 @@ void increment_by_one_ref(int& value){ // pass by reference
 
 int main(){
 
+    //? prefere string_view over string& references 
+    //* std::string_view can handle std::string , std::string_view and C like strings efficiently 
+    //* std::string& references can only handle std::strings efficiently, for the other types a expensive copy has to be made
     std::string name {"Patrick Gschnell"s};
     const std::string const_name {"Peter Hendricks"s};
     int age {24};
