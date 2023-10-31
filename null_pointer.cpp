@@ -1,6 +1,15 @@
 #include <iostream>
 #include <cstddef>
 
+void print_pointer(int* ptr){
+    std::cout << "in print_pointer(int*)" << std::endl;
+}
+
+//? overloaded function that uses nullptr_t as the parameter type 
+void print_pointer(std::nullptr_t ptr){
+    std::cout << "in print(std::nullptr_t)" << std::endl;
+}
+
 int main(){
     //! references should be favored over pointers, unless the additional capabilities provided by pointers are required.
 
@@ -28,7 +37,12 @@ int main(){
 
     //! usage of null pointers causes undefined behavior and dereferencing a null pointer will probably crash the program
     //* one of the most common reasons for crashes are dangling or null pointers being dereferenced
-    std::cout << *null_ptr << std::endl;
+    //std::cout << *null_ptr << std::endl;
+
+    //? null pointers have their own type to be destinguished from other pointers
+    //* std::nullptr_t in the library <cstddef>
+    print_pointer(i_ptr);
+    print_pointer(nullptr); // the identifier null_ptr does not work here
 
     return 0;
 }
