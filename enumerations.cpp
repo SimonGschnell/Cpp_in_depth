@@ -8,7 +8,7 @@ using namespace std::literals;
     //? definition for unscoped enumerations
     //* each enumerated type is considered to be a distinct type that can be distinguished
     //! enumerations are integral symbolic constants that hold an integral value
-    enum Color{
+    enum Color: int{    //? we can specify the underlying basetype for enumerations (default : int) 
         red, // integral value 0 
         green, // integral value 1
         blue, // integral value 2
