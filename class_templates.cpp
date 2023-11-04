@@ -43,8 +43,18 @@ template <typename T, typename U> void print_pair( std::pair<T,U> p ){
 }
 
 int main(){
+    //! aliases for class templates
+    using IntPair = std::pair<int,int>; // creating an alias for a std::pair that contains 2 int data members
+    using IntStructPair = Pair<int>; // alias for user-defined Pair with int data members
 
+    //? we can define aliases for user-defined types that use class templates
+    //* the following alias is valid for Point<int>, Point<double>, Point<std::string>, ...
+    template <typename T>
+    using TemplatePair = Pair<T>;
+
+    //! usage of aggregate types with class templates
     Pair<int> p_int {1,8};
+    IntStructPair p_alias_int {1,8}; //* same as p_int with the usage of the alias
     Pair<double> p_double {4.3,3.9};
 
     std::cout << max(p_int) << std::endl; //? will use the overloaded int method
