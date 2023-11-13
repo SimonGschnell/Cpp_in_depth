@@ -3,6 +3,7 @@
 //? how does the compiler know how to call member functions 
 //! the compiler implicitly uses a hidden this pointer to the class object to perform actions on the object
 
+//* this was implemented as a pointer because back in time when it was introduced to the language, references did not exist yet!
 class Simple{
     private:
         int m_id{};
