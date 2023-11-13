@@ -7,6 +7,7 @@ class Simple{
     private:
         int m_id{};
     public:
+        Simple() = default;
         Simple(int id): m_id{id}{}
 
         void set_id(int m_id){
@@ -36,6 +37,21 @@ class Simple{
             m_id -= value;
             return *this;
         }
+
+        //? the implicit this object can also be used to reset the object by assigning it to a fresh class obj
+        void reset(){
+            *this = Simple{};
+        }
+
+        //? inside non-const member functions, the this keyword is a const pointer to a non-const value
+        void test1()  {
+            this->m_id = 2;
+        }
+        //? inside const member functions, the this keyword is a const pointer to a const value
+        void test2() const {
+            //this->m_id = 2; //! compiler error
+        }
+        
 };
 
 int main(){
