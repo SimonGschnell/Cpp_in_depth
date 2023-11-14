@@ -1,5 +1,8 @@
 #include "class_header.h"
 
+//! member functions outside of the class are not excempt of the ONE DEFINITION RULE
+//? Therefore those functions are usually defined in a code file (where they are only defined once)
+
 //? full definition of the Person constructor
 Person::Person(std::string_view name, int age): m_name{name}, m_age{age}{}
 
