@@ -25,6 +25,7 @@ class Person{
 
 //? member functions defined outside of the class AND INSIDE the header file will cause the ONE DEFINITION RULE to break code
 //! these functions have to be set to inline explicitly
+//* this approach is also used for header-only libraries, where only the header file has to be included to work with the source code
 inline const std::string& Person::get_greeting() const{
     return "hello Mr. ";
 }
