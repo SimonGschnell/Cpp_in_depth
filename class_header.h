@@ -15,8 +15,10 @@ class Person{
         Person(std::string_view name, int age);
         void print() const;
         const std::string& get_greeting() const;
-        Person& add_age(int value);
-        Person& subtract_age(int value); 
+
+        //? and always put the default argument of a function in the forward declaration
+        Person& add_age(int value=1);
+        Person& subtract_age(int value=1); 
         void set_name(std::string_view name){ m_name = name; }
         const std::string& get_name() const { return m_name; }
         void set_age(int age){ m_age = age; }
