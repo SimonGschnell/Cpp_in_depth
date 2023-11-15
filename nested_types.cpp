@@ -29,11 +29,17 @@ class Fruit{
             orange
         };
     
+    //? we can also define nested typedefs 
+    //* also defined before its usage
+    using MyInt = int;
+    
     private:
         Type m_type{}; 
+        MyInt m_value{0}; 
 
     public:
         Fruit(Type t): m_type{t}{}
+        const MyInt& getValue(){return m_value;}
         bool is_cherry() const { return m_type == cherry;}
         const Type& getType() const { return m_type;}    
     
@@ -52,7 +58,8 @@ int main(){
     if(f1.getType() == Fruit::apple){
         // do something 
     } 
-    
+    //? usage of the nested typedef only usable with qualifed name of the class 
+    Fruit::MyInt val{22};
 
 
 }
