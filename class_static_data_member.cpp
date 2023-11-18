@@ -33,6 +33,10 @@ class Person{
 
     //? the definition of static data members can also be private and be implemented outside of the class
     static int person_count2;
+    //! cannot be accessed in the main function because it is private 
+    //* we could create a member function to access the private static data members but 
+    //? we can create static member functions to access private static data members
+    static inline int private_inline_person_count{0};
 
     std::string m_name{};
     int m_age{};
