@@ -57,5 +57,10 @@ int main(){
     std::size_t index2{2}; //! storing unsigned data can be dangerous
     my_vector[index2]; //? no conversion is done 
 
+    //? on the other hand constexpr signed integers can freely be used for the subscription operator 
+    //* because the compiler can ensure safe usage at compile time
+    constexpr int i{2};
+    my_vector[i];
+
     return 0;
 }
