@@ -34,6 +34,24 @@ void print_third_element(const std::vector<int>& int_vec){
     std::cout << int_vec[2] << std::endl;
 }
 
+//? std::vector can be safely returned by value BECAUSE it supports move semantics
+//* move semantics can be used whenever the value of a rvalue is used as initialization or assignment of the same type
+//* and when the types supports move semantics 
+std::vector<int> return_array_of_pair(int val1, int val2){
+    //? avoiding copy elision
+    std::vector<int> pair {val1, val2};
+    //? vector is returned by value, move semantics is used 
+    return pair;
+}
+
+//? ALSO std::string does support move semantics
+//* therefore it is safe to return it by value
+//! move semantics is only applied when returning values not when passing values as arguments
+std::string return_move_semantic_string(){
+    std::string s {"Hello World"};
+    return s;
+}
+
 int main(){
 
     std::vector<int> array{1,7,3,2};
@@ -50,5 +68,10 @@ int main(){
     //needs_to_have_subscription_operator(char_var); //! compiler error because char doesn't support the subscript operator
     // print_third_element(small_array); //! asserts at runtime
 
+    //? whenever rvalues are used for initialization or assignment of the same type and support move semantics
+    //* move semantics is used
+    std::vector<int> my_pair {return_array_of_pair(3,3)}; // the return value of return_array_of_pair() dies at the end of the expression and is therefor moved to my_pair
+    std::string my_string {return_move_semantic_string()}; // move semantics applied on std::string
+    
     return 0;
 }
