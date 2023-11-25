@@ -8,7 +8,7 @@
 
 int main(){
 
-    std::vector<int> array{1,2,3,4};
+    std::vector<int> array{1,2,3,4} ;
     
     //? usage of a range based loop
     for(int element : array){
