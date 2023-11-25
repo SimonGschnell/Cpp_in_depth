@@ -69,6 +69,18 @@ int main(){
     letters.pop_back();
     print_stack(letters);
 
+    struct Foo
+    {
+        std::string a{};
+        int b{};
+    };
+    std::vector<Foo> stack{};
+    //? push_back will copy the object when passing a temporary object
+    stack.push_back({ "peter", 4 });
+    //? .emplace_back() is a more performant version of .push_back() that will 
+    //? foreward the parameters to create the object inside the vector
+    stack.emplace_back("peter", 4);
+    //! As of C++20 there is little reason not to favor emplace_back() over push_back()
     
 
     return 0;
