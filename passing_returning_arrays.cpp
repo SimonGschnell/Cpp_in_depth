@@ -20,6 +20,37 @@ void dynamic_print_first(const std::array<T,len>& arr){
     std::cout << std::get<1>(arr) << std::endl;
 }
 
+//? there are 2 possibilities to return an array from a function
+//~ most of the time it is prefered to use a std::vector instead when returning a collection, because it supports the move semantics
+
+
+
+//* return by value:
+// makes expensive copies of the array and the elements, and template arguments have to be set explicitly
+//~ this option works with non-constexpr arrays, just use vector instead
+template <typename T, std::size_t len>
+std::array<T,len> generate_array(){
+    std::array<T,len> arr{};
+    for(int i=0; i<len; i++){
+        std::cout << "enter element in array["<<i<<"]: ";
+        std::cin >> arr[i];
+        std::cout << std::endl;
+    }
+    return arr;
+}
+
+//* returning an std::array by out parameter
+// more efficient but doesn't allow temporary objects
+//? which means that we take a non-const reference to an array that we modify directly through the reference
+template <typename T, auto len>
+void modify_array(std::array<T,len> arr){
+    
+    for(std::size_t i=0; i<len; i++){
+        std::cout << "enter element in array["<<i<<"]: ";
+        std::cin >> arr[i];
+        std::cout << std::endl;
+    }
+}
 
 
 int main(){
@@ -33,6 +64,7 @@ int main(){
     dynamic_print_first(arr); 
 
 
+    std::array<int,5>(generate_array<int,5>());
 
     return 0;
 }
