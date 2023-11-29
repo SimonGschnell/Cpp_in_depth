@@ -2,6 +2,9 @@
 #include <array>
 #include <functional>
 
+void print_int_reference(const int& value){
+    std::cout << "printing a int& value: " << value << std::endl;
+}
 
 int main(){
     
@@ -37,6 +40,20 @@ int main(){
         std::cout << element << std::endl;
     }
 
+
+    //! the Operator= on std::reference_wrapper does actually change which object is being referenced
+    //! std::reference_wrapper will also implicity convert to the class template type used
+    int value1{40};
+    int value2{80};
+    std::reference_wrapper<int> int_wrapper{value1};
+    //? we actually change to which object is being referenced with the Operator= on std::reference_wrapper
+    int_wrapper = value2;
+    //? we are able to pass std::reference_wrapper to a function that requires a int& 
+    //* this works because the std::reference_wrapper will implicitly convert to a reference to the passed template type
+    print_int_reference(int_wrapper);
+    //? same behavior when using .get() the get T& of std::reference_wrapper
+    print_int_reference(int_wrapper.get());
+    std::cout << int_wrapper << std::endl;
 
 
     return 0;
