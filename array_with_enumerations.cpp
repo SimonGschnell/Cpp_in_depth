@@ -22,7 +22,7 @@ namespace Colors{
     //? we can use an constexpr array to hold the respresentational values for all enum members
     //* we use the string_view suffix to deducte the type and length 
     using namespace std::string_view_literals;
-    constexpr std::array colorName("red"sv, "blue"sv, "green"sv);
+    constexpr std::array colorName{"red"sv, "blue"sv, "green"sv};
 
     static_assert(max_colors == colorName.size());
 }
@@ -44,7 +44,17 @@ int main(){
     
     // static_assert(Max_Students == std::ssize(student_grades)); //~ catches the undefined behaviour and throws error
 
+    //? it is not possible to use a foreach loop over the enumeration members of an enumeration
+    //for(const auto& element : Colors::Type){
+    //    std::cout << element << std::endl; 
+    //}
 
+    //? but we can use range based loops over enumerations
+    //? therefore if we pack the enumeration members themselve into an array we can iterate over those array elements
+    constexpr std::array colors{Colors::red,Colors::blue,Colors::green};
+    for(const auto& element : colors){
+        std::cout << getColor(element) << std::endl;
+    }
 
     return 0;
 }
