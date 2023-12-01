@@ -10,6 +10,13 @@ void pass_any_length_array(const int arr[]){
     std::cout << "does passed array have type int* : " << (typeid(arr) == typeid(const int*)) << std::endl;
 }
 
+//? using references, C-style arrays wont decay, but only arrays of the fixed defined length can be passed
+void C_array_passed_reference(const int (&arr)[3]){ // only argument arrays with length 3
+    //~ here the sizeof function will print the actual length of the array because it was not decayed through the array
+    std::cout << "size of decayed array, will be size of int* : " << sizeof(arr) << std::endl;
+    std::cout << "does passed array have type int* : " << (typeid(arr) == typeid(const int*)) << std::endl;
+}
+
 int main(){
 
     int arr[3] {3,6,9};
@@ -42,5 +49,13 @@ int main(){
     //* to avoid modification on the original object, the parameter is defined as const
     pass_any_length_array(arr);
     pass_any_length_array(long_arr);
+
+    //? when a function defines a reference to a C-style array as parameter the array will not be decayed
+    C_array_passed_reference(arr);
+
+
+    //! C-like strings are C-like arrays 
+    //? that use a terminating symbol \0 in order to traverse and have the information of the length, even when the array got decayed
+    //* C-like string "hans" equals char arr[]{'h','a','n','s','\0'};
 
 }
