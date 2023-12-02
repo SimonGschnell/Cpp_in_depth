@@ -1,5 +1,26 @@
 #include <iostream>
 
+template <typename T,int N>
+void traversing_pointer_arithmetic(T arr[N]){
+	
+    const int* end{ arr + N }; // end points to one-past-the-end element
+
+	for (; arr != end; ++arr)           // iterate from begin up to (but excluding) end
+	{
+		std::cout << *arr << ' ';     // dereference our loop variable to get the current element
+	}
+
+}
+
+//! range for loops are implemented somewhat in this manner, passing the start and end as parameters
+void traversing_pointer_arithmetic(int* start, int* end){
+	for (; start != end; ++start)           // iterate from begin up to (but excluding) end
+	{
+		int range_declaraion = *start ;     // here the variable is assigned the next element in the loop 
+	}
+
+}
+
 int main(){
 
     //? pointer arithmetic allows us to use arithmetic operators to produce new memory addresses 
@@ -37,6 +58,20 @@ int main(){
     }
     //! this is the primary reason arrays are 0 based. because the compiler doesn't have to subract 1 whenever subscripting
     
+    //? array indexes are relative positions and don't represent fixed elements within the array
+    //* indexes are just offsets from the starting position
+    //* if the starting position is not the start, the index does not represent an element in that fixed index position
+    int* starting_pos{arr};
+    std::cout << "strating from 0: arr[0]="<< starting_pos[0] << " - *(arr)=" << *(starting_pos)<< std::endl;
+    starting_pos = (arr+1);
+    std::cout << "strating from 1: arr[0]="<< starting_pos[0] << " - *(arr)=" << *(starting_pos)<< std::endl;
+    //? negative subscription values are also possible resulting in: *((arr)+(-1))
+    std::cout << "arr[-1]: "<< starting_pos[-1] << std::endl ;
+
+    //! Favor subscripting when indexing from the start of the array (element 0), so the array indices line up with the element.
+    //! Favor pointer arithmetic when doing relative positioning from a given element.
     
+    traversing_pointer_arithmetic<int,3>(arr);
+
     return 0;
 }
