@@ -30,7 +30,11 @@ void execute_operation_on_ints(int a, int b, int(*f_p)(int, int)=add){
 
 }
 
-
+//~ aliases can be used to make functions pointers clearer to read
+using Operation = int(*)(int, int);
+void using_callbacks(int a, int b, Operation op=add){
+    std::cout << op(a, b) << std::endl;
+}
 
 int main(){
 
@@ -41,7 +45,12 @@ int main(){
     //? function pointers can also be constant, therefore have to be initalized at definition
     int (*const fnc_ptr_const)(){&foo}; 
 
-    
+    //~ another way to define function pointers is through std::function in the <functional> library
+    //* looks cleaner
+    std::function<int()>f_ptr{&foo};
+    //~ function pointers type can also be deduced with the auto keyword
+    //* but it makes it harder to work with the pointer without information about it
+    auto f_pointer{&foo};
     
     //? we get the address of a function like we get addresses of variables with the & symbol
     int (*fnc_foo)(){&foo};
