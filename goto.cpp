@@ -1,9 +1,9 @@
 #include <iostream>
 
-int main(){
+//! goto statements should be avoided because of the logical complexity they can create
+//* goto statements can be easily be replaced with continue or break statements
 
-    //! goto statements should be avoided because of the logical complexity they can create
-    //* goto statements can be easily be replaced with continue or break statements
+int main(){
 
     double input {};
 
