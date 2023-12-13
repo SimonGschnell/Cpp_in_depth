@@ -35,6 +35,19 @@ int main(){
     //? here a lambda function that just adds two numbers
     //~ storing a lambda in a variable can make code more readable
     auto sum_lambda= [](int a,int b){return a+b;};
+
+    //~ we can specify the return type of a lambda function with -> type after the parameters
+    std::function lambda_with_return{[](int a, int b)->int{ return a+b;}};
+    
+    //? lambdas parameters can also be type deduced with the auto keyword, these types of lambdas are called generic lambdas
+    auto generic_lambda {[](auto para1){ std::cout << para1 << std::endl;}};
+    generic_lambda("string");
+    generic_lambda(7);
+
+    //! as of C++17 all lambdas are implicitly constexpr if they satisfy two requirements:
+    //* the lambda must have no captures or all captures are constexpr
+    //* the functions used inside the lambda itself have to be also constexpr, many standard library functions were not made constexpr
+
     //* printing the result of the called lambda function
     std::cout << "the result of the lambda call cum_lambda(3,4): " << sum_lambda(3,4) << std::endl; 
     
