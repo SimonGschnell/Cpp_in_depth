@@ -1,6 +1,27 @@
 #include <iostream>
 #include <vector>
+#include <array>
+#include <functional>
 
+//! captured references to variables can be dangling if the referenced variable dies before the lambda
+auto makeWalrus(const std::string& name)
+{
+  // Capture name by reference and return the lambda.
+  //? the lambda will be returned with a dangling reference to name because it dies at the end of the function
+  //~ this can be avoided by capturing the parameter by value which creates a clone inside the lambda
+  return [&]() {
+    std::cout << "I am a walrus, my name is " << name << '\n'; // Undefined behavior
+  };
+}
+
+//? when lambdas are passed to a std::function, a copy of the lambda is made in the implementation of std::function
+//! this can be avoided by passing the lambda insida a std::reference_wrapper, so only the reference_wrapper is copied and not the lambda inside it
+//~ Standard library functions may copy function objects (lambdas are function objects)
+void myInvoke(const std::function<void()>& fn)
+{
+    //? best practice is trying to avoid mutable lambdas, so these problems don't arise
+    fn();
+}
 
 
 int main(){
@@ -27,7 +48,7 @@ int main(){
         fruit_basket[1] = "foo";
         for( const auto& item : fruit_basket){
             std::cout << item << std::endl;
-        }
+        }Standard library functions may copy function objects (reminder: lambdas are function objects).
     }};
 
     //? in order to pass an outer scope variable to the lambda by reference we have to add an & before the captured variable name
@@ -50,18 +71,43 @@ int main(){
     //~ listing all used captured variables inside a lambda can be burdensome
     //? c++ supports default captures by value or by reference
     //* by specifying = insde the capture clause, every outside scope variable used in the lambda is cloned (passed by value) 
-    auto lambda_capture_default{[=]()  { 
-        //? contains clones of the captures
+    auto lambda_capture_default{[=]()  mutable { 
+        //? captures random_integer by value
+        ++random_integer; 
+        std::cout << random_integer << std::endl;
+        
     }};
 
-    //* by sepcifying & inside the capture close, every capture is passed as reference to the lambda
+    //* by specifying & inside the capture close, every capture is passed as reference to the lambda
     auto lambda_capture_default2{[&]()  { 
-        //? contains references to the captures
+        //? captures fruit_basket by reference
+        std::cout << fruit_basket[0] << std::endl;
+    }};
+
+    //* default captures can be combined with normal captures 
+    //? captures fruit_basket by reference and everything else by value
+    auto lambda_capture_default3{[=, &fruit_basket]()  { 
+        std::cout << random_integer << fruit_basket[0] << std::endl;        
+    }};
+
+    //? variables can be created on the fly in the capture clause for lambdas 
+    //* the type of the created variable that is only visible in the lambda is automatically deduced
+    auto lambda_capture_default4{[first_fruit{fruit_basket[0]}]()  { 
+        std::cout << first_fruit << std::endl;        
     }};
 
     lambda_fun();
     lambda_fun2();
     lambda_capture_reference();
+
+    myInvoke(lambda_capture_default);
+    myInvoke(lambda_capture_default);
+    myInvoke(lambda_capture_default);
+    //! std::ref can be used to create a std::reference_wrapper
+    myInvoke(std::ref(lambda_capture_default));
+    myInvoke(std::ref(lambda_capture_default));
+    myInvoke(std::ref(lambda_capture_default));
+
     
     //* printing the original lambda function
     for(const auto& item : fruit_basket){
