@@ -52,6 +52,9 @@ int operator+(const Person& p1, int i2){
 }
 
 int operator+(int i1 ,const Person& p2){
+    //? if the implementation for the counter part of the overloaded operator is lengthy
+    //~ the operator can be redirected by calling
+    //* p2 + i1   --- which calls the counter part overloaded operator
     return i1 + p2.m_age;
 }
 
