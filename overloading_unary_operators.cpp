@@ -19,7 +19,7 @@ class Euro{
 
         //? we can use the unary operator! to check whether an object evaluates to true or false depending on the data member of the object 
         bool operator! () const {
-            return m_euros > 0;
+            return m_euros <= 0;
         }
     private:
        int m_euros{};
