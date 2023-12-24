@@ -9,6 +9,7 @@ class IntList{
         //~ returning by value or returning a const reference would not allow the user to modify the indexed element
         int& operator[](int index){
             return m_list[index];
+            //! return const_cast<int&>(getIndex(index));
         }
         //? now const objects of the class IntList would not be able to use the subscript operator because the overloaded function would be able to modify data members
         //* therefore a explicit version for const objects is necessary
@@ -17,10 +18,18 @@ class IntList{
             //? readonly version of the operator[]
             //* this function could also return by value if the type is cheap to copy
             return m_list[index];
+            //! return getIndex(index);
         }
     private:
         int m_list[10]{0,1,2,3,4,5,6,7,8,9};
+
+        //~ if the implementations for the two different subscript overloaded functions versions would be complex and long
+        //* then we could use private member function that returns a const reference and remove the const characteristic with const_cast<>()
+        const int& getIndex( int value ){
+            return m_list[value];
+        }
 };
+ 
 
 int main () {
 
