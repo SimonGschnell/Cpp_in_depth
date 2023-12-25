@@ -10,6 +10,16 @@ class Matrix {
         //? overloading () operator
         int& operator() (int row, int column);
         int operator() (int row, int column) const;
+        //~ because the operator() can have varying arguments we can define multiple overloaded versions of the operator 
+        //* for example operator() with no arguments
+        void operator() (){ 
+            //* this implementation will reset the matrix to all zero values
+            for(auto& row : m_matrix){
+                for (auto& col : row){
+                    col = 0;
+                }
+            }
+        }
     private:
         int m_matrix [4] [4]{}; 
 };
@@ -28,6 +38,9 @@ int main(){
 
     Matrix m{};
     m(1,2) = 44;
+    std::cout << m(1,2) << std::endl;
+    //* reseting the matrix with the custom () overload
+    m();
     std::cout << m(1,2) << std::endl;
 
     return 0;
