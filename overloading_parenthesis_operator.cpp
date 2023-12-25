@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <string_view>
 
 //~ the parentheses operator has to be defined as a member function
 //* and it one of the only operators that take varying count of arguments
@@ -34,6 +36,24 @@ int Matrix::operator() (int row, int column) const {
     return m_matrix[row][column];
 }
 
+
+class MyString{
+    public:
+        MyString (std::string_view s) : m_string{s}{}
+        //? overloading the << operator to output the user-defined object using the underlying string data memberk
+        friend std::ostream& operator<< (std::ostream& out , const MyString& s){
+            out << s.m_string;
+            return out;
+        }
+        //? instead of returning a string and creating the substring with std::string_substring which creates another copy of the string we use std::string_views and its substring function
+        MyString operator() (int start, int end){
+            std::string_view s_view {m_string};
+            return MyString{s_view.substr(start,end)};
+        }
+    private:
+        std::string m_string{};
+};
+
 int main(){
 
     Matrix m{};
@@ -42,6 +62,9 @@ int main(){
     //* reseting the matrix with the custom () overload
     m();
     std::cout << m(1,2) << std::endl;
+
+    MyString s { "Hello, world!" };
+    std::cout << s(7, 5) << '\n'; // start at index 7 and return 5 characters
 
     return 0;
 }
