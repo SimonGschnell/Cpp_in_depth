@@ -17,9 +17,13 @@ class Cents{
         //* - non static 
         //* - they can not have any arguments but they still have the implicit this object
         //* - overloading the typecast operator does not have return types because it is already defined what to return in the typecast operator
-        
+
+        //~ it is best practice to always make typecasts explicit, unless we make a cheap conversion from one user-defined type to another
         //? we can also create typecast operators that convert a Cents object to a different user-defined type (if it makes sense)
         operator int() const { return m_cents; }
+
+        //! just like constructos can be explicit, also typecast operators can be explicit to avoid implicit conversions
+        explicit operator std::string() const { return std::to_string(m_cents);}
     
     private:
         int m_cents{};
@@ -59,6 +63,14 @@ int main () {
     //? we even can pass it to a function that explicitly takes doubles as arguments 
     //* because the cents object can be converted to an int and an int can be converted to a double
     printDouble(cent);
+
+    //? will use cent as int and make a narrow conversion from integer to char and put , inside the cent_string variable
+    std::string cent_string{cent};
+    std::cout << cent_string << std::endl;
+
+    //? with static_cast we are explicitly converting the cent user-defined type to std::string which will call our defined explicit typecast operator
+    std::string explicit_cent_string{ static_cast<std::string>(cent)};
+    std::cout << explicit_cent_string << std::endl;
    
     return 0;
 }
