@@ -44,4 +44,36 @@ ptr2 = nullptr;
 //* we can use the std::nothrow constant between the new keyword and the object type, this will return a nullptr if the new keyword fails instead of throwing an excepiton
 int* value { new (std::nothrow) int{55} };
 
+//? null pointers are useful when dynamically allocating memory because they tell us if a pointer is pointing to memory or not
+//* we can conditionally allocate memory with null pointers
+if (!ptr2){ // checks if it is a null pointer
+    ptr2 = new int; // allocates new memory for the pointer in case it is a null pointer
+}
+
+//? deleting a null pointer has no effect and therefore we dont have to check whether the pointer is not pointing to a null pointer
+delete ptr2;
+ptr2 = nullptr;
+delete ptr2; // has no effect
+
+
+//! dynamically allocated memory stays allocated until it is explicitly deallocated or the program ends and the operating system cleans the memory up
+//* pointers follow normal scoping rules for local variables, which can create different scoping problems where allocated memory does not get deallocated
+{   // start of a block scope
+    int* scoped_ptr {new int{1}}; //~ dynamic allocation of memory
+}   // scoped_ptr lvalue goes out of scope here and cannot be deleted anymore //! this is called memory leak
+
+//? there are different ways how memory can leak
+//* a pointer holding the address of dynamic allocated memory can be assigned a new value without deleting the old dynamic memory
+int test {55};
+int* test_ptr { new int }; // allocates dynamic memory
+//~ this can be fixed by deleting the dynamic memory before reassinging a new address to the pointer
+//! delete test_ptr; 
+test_ptr = &test; // assignes the address of lvalue test without deleting the old requested dynamic memory
+
+//* memory leak can also occur via double allocation
+int* value_ptr { new int {}};
+//~ also this can be fixed by deleting the old dynamic memory before assigning new dynamic memory
+//! delete value_ptr;
+value_ptr = new int{}; // new dynamic memory was requested and assigned without deleting the old dynamic memory
+
 }
