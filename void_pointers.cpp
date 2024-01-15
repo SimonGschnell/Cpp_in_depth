@@ -59,7 +59,10 @@ int main(){
 
     //! deleting a void pointer results in undefined behavior because the type is not known
     //* the pointer has to be casted to the appropriate type first in order to delete it
-    delete static_cast<float*>(voidptr);
+    //~ the void pointer has to actually point to a dynamically allocated resource in order to be deleted
+    int* resource {new int{100}};
+    voidptr = resource;
+    delete static_cast<int*>(voidptr);
 
     //! it is not possible to perform pointer aritmethic with void pointers becasue the pointer using pointer arithmetic must know the underlying type 
 
