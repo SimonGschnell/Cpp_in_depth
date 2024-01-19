@@ -15,6 +15,18 @@
 //! but with r-values we are sure that they are not going to be used in the future and we can perform move semantics
 //? through r-value references we are able to define different behaviour when arguments are r-values or l-values, enabling more efficient computation
 
+//! THE RULE OF FIVE
+//* says that if one of the following is defined or deleted:
+//* - COPY CONSTRUCTOR
+//* - COPY ASSIGNMENT OPERATOR
+//* - MOVE CONSTRUCTOR
+//* - MOVE ASSIGNMENT OPERATOR
+//* - DESTRUCTOR
+//* then all of them should be defined or deleted
+
+//! only deleting the move constructor and assignment operator will cause the class to not be returnable by value from a function
+//* because in such a scenario the deleted move constructor is favored over a copy constructor
+
 template <typename T>
 class Person{
 public:
