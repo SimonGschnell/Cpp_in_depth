@@ -37,7 +37,11 @@ class Derived : public Base{
             out << "In Derived " << d.getValue() << "\n";
             //? instead of using the scope resolution qualifier, which won't work in friend functions because they are not part of the class
             //? we convert/cast the derived class to a base class to call the operator<< on a Base object
-            out << static_cast<Base>(d);
+            out << static_cast<const Base&>(d);
+            /* alternative version that uses upcasting instead of down casting which is safer and more common, while downcasting causes object slicing - loosing extra information from the detailed derived class
+            const Base& b {d};
+            out << b;
+            */
             return out;
         }
     private:
