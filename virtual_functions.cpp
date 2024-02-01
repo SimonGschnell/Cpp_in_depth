@@ -10,10 +10,20 @@ class Base{
         virtual void print(){
             std::cout << "Base" << std::endl;
         }
+        //! virtual functions shouldn't be called in constructors or destructors 
+        //? CONSTRUCTORS: when creating a derived class object, the inherited parts are constructed first therefore 
+        //? when calling the virtual function in the constructor of the base class, the derived class won't be constructed yet
+        //? DESTRUCTORS: when a derived class object is destroyed, it will be destroyed starting from the most derived part until the most base part
+        //? therefore, when calling a virtual function in the destructor of the base class, the derived parts will be already destroyed
+        Base(){ std::cout << "calling virtual function print() in constructor: "; print(); }
+        Base( const Base& base ){ std::cout << "calling virtual function print() in copy constructor: "; print(); }
+        ~Base(){ std::cout << "calling virtual function print() in destructor: "; print(); }
+        
 };
 
 class Derived: public Base{
     public:
+        //? If a function is virtual, all matching overrides in derived classes are implicitly virtual.
         //? the keyword "override" indicates that this function overrides a virtual function of an inherited class
         //! if it doesn't find a virtual function that matches the function signature in an inherited class, the compiler will throw an exception
         void print() override {
@@ -40,6 +50,7 @@ int main(){
     ref_b.print();  //? this will print "Derived" because it is the most derived version object referenced to
     Base& ref_b2{md};
     ref_b2.print(); //? this will print "More Derived" because it is the most derived version of the object referenced to
+    
 
     //! Virtual function resolution only works when a member function is called through a pointer or reference to a class type object.
     //* calling virtual member function directly non-references/pointers don't work because those objects were created by copying the part their class belongs to
