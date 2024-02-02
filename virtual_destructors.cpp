@@ -2,6 +2,10 @@
 #include <string>
 #include <string_view>
 
+//~ marking every desctructor virtual comes with a cost, each class also has to store an extra virtual pointer:
+//! Rule of thumb: if you intent your class to be inherited from, use a virtual desctructor to avoid memory leaks when deleting a pointer to the base class
+//? if you don't intent your class to be inherited from, make the class final, so that other classes can't inherit from the class and the destructor does not have to be marked virtual
+
 class Resource{
     public:
         Resource(){
@@ -28,7 +32,7 @@ class vBase{
         virtual ~vBase(){
             std::cout << "vBase Destructor called" << std::endl;
         }
-        //! if you want to have an empty deconstructor that is virtual you have to define it as default and mark it virtual
+        //! if you want to have an empty desctructor that is virtual you have to define it as default and mark it virtual
         //virtual ~vBase() = default;
     private:
         
@@ -53,11 +57,11 @@ int main(){
     Base* b{d};
     
     //? when trying to delete b which is a Base pointer to d a dynamically allocated Derived object
-    //* only the Deconstructor of Base is called because the destructor is not virtual
-    //! the Derived part which may contain dynamically allocated memory that has to be cleaned up will not be deconstructed
+    //* only the Desctructor of Base is called because the destructor is not virtual
+    //! the Derived part which may contain dynamically allocated memory that has to be cleaned up will not be desctructor
     delete b;
     
-    //? We always mark destructors of the base class as virtual, to call every destructor in the inheritance hierarchy
+    //? We can mark destructors of the base class as virtual, to call every destructor in the inheritance hierarchy
     Derived* d2{new Derived{}};
     vBase* vb{d2};
     delete vb;
