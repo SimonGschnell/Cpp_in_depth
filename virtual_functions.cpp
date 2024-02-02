@@ -24,14 +24,16 @@ class Base{
 class Derived: public Base{
     public:
         //? If a function is virtual, all matching overrides in derived classes are implicitly virtual.
-        //? the keyword "override" indicates that this function overrides a virtual function of an inherited class
+        //? "override" indicates that this function overrides a virtual function of an inherited class
         //! if it doesn't find a virtual function that matches the function signature in an inherited class, the compiler will throw an exception
         void print() override {
             std::cout << "Derived" << std::endl;
         }
         
-        //void print2() override {} //! compiler error: member function declared with 'override' does not override a base class member
-};
+        //* member functions marked as override can not be normal functions they have to override a virtual function that got inherited
+        //void print() const override {} //! compiler error: member function declared with 'override' does not override a base class member
+        //void print2() override {} //! same error here
+};      
 
 class MoreDerived: public Derived{
     public:
