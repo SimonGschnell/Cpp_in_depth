@@ -52,7 +52,8 @@ int main(){
     ref_b.print();  //? this will print "Derived" because it is the most derived version object referenced to
     Base& ref_b2{md};
     ref_b2.print(); //? this will print "More Derived" because it is the most derived version of the object referenced to
-    
+    //! if you don't want to call the most derived version of a virtual function, you can use the scope resolution operator
+    ref_b2.Base::print(); //? this will print "Base" because it used the scope resolution operator on a Base& reference
 
     //! Virtual function resolution only works when a member function is called through a pointer or reference to a class type object.
     //* calling virtual member function directly non-references/pointers don't work because those objects were created by copying the part their class belongs to
