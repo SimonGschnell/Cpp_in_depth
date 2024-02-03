@@ -39,6 +39,18 @@ class Derived : public Base{
         }
 };
 
+//? pure virtual functions are mainly used for Interface Classes
+//* interface classes have no member variables and only have pure virtual functions that have to be refefined by the derived classes that inherit the interface class
+//~ Interface Classes are often named beginning with an I
+class IErrorLog{
+    public:
+        virtual bool openLog(std::string_view fileName)=0;
+        virtual bool closeLog()=0;
+        virtual bool writeError(std::string_view errorMessage)=0;
+
+        virtual ~IErrorLog(){}
+};
+
 int main(){
 
     //? abstract classes cannot be instantiated
