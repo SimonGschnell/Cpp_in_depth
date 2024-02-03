@@ -12,11 +12,16 @@ class Base{
     //? for pure virtual functions, instead of defining the body for the function, we assign the function the value 0
     //~ only the value of virtual functions can be set to 0
         virtual void printSelf() = 0;
-        //? any class with pure virtual functions should also have a virtual destructor
-        ~Base(){
-            std::cout << "Base deallocated" << std::endl;
-        }
+    //? pure virtual functions can also have a body definition, but the class still remains abstract and the body definition has to be defined outside of the class
+        virtual void print() = 0;
+    //? any class with pure virtual functions should also have a virtual destructor
+    //* because every class that is meant to be inherited from should have a virtual destructor, and abstract classes are specifically meant to be inherited
+        virtual ~Base() = default;
 };
+
+void Base::print(){
+    std::cout << "Base Print" << std::endl;
+}
 
 
 //! any derived class that doesn't define the body for a pure virtual function will be considered as abstract as well
@@ -26,6 +31,12 @@ class Derived : public Base{
         void printSelf() override {
             std::cout << "Derived" << std::endl;
         }
+
+        //? pure virtual functions can have a defined body in case a derived class decides that the Base version of the pure virtual function is enough
+        void print() override { 
+            //? so that the derived class can reuse the body definition of the pure virtual function with the scope resolution operator of the base class
+            Base::print();
+        }
 };
 
 int main(){
@@ -34,7 +45,8 @@ int main(){
     //Base b{}; //! compiler error: object of abstract class "Base" is not allowed
     Derived d{};
     Base& b{d};
-    b.printSelf();
+    b.printSelf();  // prints Derived
+    b.print();      // prints Base, because Derived::print() calls Base::print() that has a defined body
 
     return 0;
 }
