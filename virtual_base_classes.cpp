@@ -2,6 +2,7 @@
 #include <string>
 #include <string_view>
 
+//~ classes inheriting a virtual base class will have a virtual table, what makes them larger by a pointer 
 //? virtual base classes help to avoid the diamond problem with multiple inheritance:
 //* the following Diagram shows how both Scanner and Printer can be PoweredDevices, and that Copier is both a Scanner and a Printer
 //* But the problem here is that two instances of PoweredDevice are created because both the Scanner and Printer inherit that base class
@@ -27,6 +28,8 @@ class Scanner: virtual public PoweredDevice{
     private:
         int m_s{}; 
     public:
+    //! The initialization list part that creates PoweredDevice is ignored when inherting it as a virtual base class
+    //* however, if we would create an instance of Scanner the constructor would apply normal inheritance rules and construct the PoweredDevice from the Scanner 
     Scanner(int value): PoweredDevice{value}, m_s{value} {
         std::cout << "Scanner: " << m_s << std::endl;
     }
@@ -36,6 +39,8 @@ class Printer: virtual public PoweredDevice{
     private:
         int m_p{};
     public:
+    //! The initialization list part that creates PoweredDevice is ignored when inherting it as a virtual base class
+    //* however, if we would create an instance of Printer the constructor would apply normal inheritance rules and construct the PoweredDevice from the Printer
     Printer(int value): PoweredDevice{value}, m_p{value}{
         std::cout << "Printer: " << m_p << std::endl;
     }
@@ -49,6 +54,12 @@ class Copier: public Scanner, public Printer{
     Copier(int scanner_value, int printer_value, int value): PoweredDevice{value}, Scanner{scanner_value}, Printer{printer_value} {
         std::cout << "Copier" << std::endl;
     }
+};
+
+//! if we would add a more derived class to the inheritance hierarchy, the most derived class (this one) is responsible for the virtual base class construction now
+class Test: public Copier{
+    public:
+    Test(int scanner_value, int printer_value, int value): Copier{scanner_value, printer_value,value}, PoweredDevice{value}{}
 };
 
 int main(){
