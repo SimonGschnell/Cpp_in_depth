@@ -62,5 +62,15 @@ int main(){
         std::cout << ref.get().getName() << std::endl; // Prints Derived then Base
     }
 
+
+    //! Another problem of object slicing are Frankenobjects
+    Derived der1{55,55};
+    Derived der2{11,11};
+    Base& base{der1};   // Reference to derived object der1
+    base = der2;        // calling the default operator= of Base with argument Derived der2 (the default operator= is not virtual)
+    //? This results in copying the Base part of der2 to der1 and keeping the Derived part of der1 the same
+    //? This is called a Frankenobject because the parts of the object are from different objects
+    std::cout << "Frankenobject => Base portion: " << der1.getValue() << ", Derived portion: " << der1.getVal() << std::endl;
+
     return 0;
 }
