@@ -34,6 +34,14 @@ class Array final{
 };
 
 //? each templated member functions that have their definition outside of the class, needs its own template declaration 
+//! if the class definition would be in its own header file and the implementations were in an own code file
+//! then the compiler would not know of the existence of Array<int>::operator[] or Array<double>::operator[] because they are not used in the own code file
+//? 3 Solutions exist:
+//* define the implementations of member functions in the same header file 
+//* change the code file to a .inl file and include Array.inl inside the header guards under the class definition --> same effect as putting everything in the header file but less cluttered 
+//* use a 3 file approach, in which the third file contains all of the instantiated classes you need
+// Reference: https://www.learncpp.com/cpp-tutorial/template-classes/
+
 template <typename T>
 T& Array<T>::operator[] (int value){
     return m_data[value];
