@@ -42,14 +42,25 @@ public:
     }
 };
 
+//! template member function specialisation
+//* if we only want to have specific behavior for a member function of a class template
+//? we don't have to redefine the whole class for single member functions
+//? we can let the compiler implicitly specialise the class from Storage<T> and only provide a explicit specialisation for the member function
+
+template<>
+void Storage<bool>::print(){
+    std::cout << std::boolalpha << m_value << std::endl;
+}
 
 int main()
 {
     // Define some storage units
     Storage i { 5 }; //? we’ll get a version stenciled from the generic templated Storage<T> class
     Storage d { 6.7 }; //? we’ll get the specialized version we created of the class 
+    Storage b { false }; //? implicitly specialised class with explicit specialisation of Storage<bool>::print()
 
     // Print out some values
     i.print();
     d.print();
+    b.print();
 }
