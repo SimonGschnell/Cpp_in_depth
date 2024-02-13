@@ -18,12 +18,22 @@ class Resource{
 
 //? using primitive types for exceptions is vague because it is hard to connect exceptions to the caller or reason their meaning
 //* Creating classes that are meant to describe exceptions and provide context for what went wrong
-class BaseException {
+//? Custom exception classes can also inherit from std::exception or std::runtime_error to have the same behavior as standard library exceptions
+class BaseException: public std::exception {
     private:
         std::string m_description{};
     public: 
         BaseException(std::string_view description): m_description{description}{}
         const std::string& getError() const { return m_description; }
+        //* https://en.cppreference.com/w/cpp/error/exception/what
+        const char* what() const noexcept override { return m_description.c_str();}
+};
+
+//? custom exception inheriting from std::runtime_error
+class CustomException: public std::runtime_error {
+    public:
+        //? no need to override .what because that's is done for us by std::runtime_error when we pass a message to its constructor
+        CustomException(const std::string& message): std::runtime_error{message}{}
 };
 
 class Base{
