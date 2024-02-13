@@ -1,5 +1,10 @@
 #include <iostream>
 #include <memory>
+#include <string>
+#include <limits>
+#include <exception> //? includes std::exception
+#include <cstddef>
+#include <stdexcept>
 
 class Resource{
     public:
@@ -76,8 +81,38 @@ int main(){
     }catch(const Derived& exception){
         std::cout << "Derived was catched" << std::endl;
     }
-    
 
+
+    //? The standard library also uses Exception classes and all of those inherit from a interface Base class called std::exception
+    //* link to a list of all standard library exceptions : https://en.cppreference.com/w/cpp/error/exception
+    try
+    {
+        std::string s;
+        s.resize(std::numeric_limits<std::size_t>::max()); // will trigger a std::length_error or allocation exception
+    }
+    //? if we want to handle a specific exception from the standard library differently we can redirect to the corresponding catch block 
+    //! every other standard library exception will fall through to the base catch clause
+    catch (const std::length_error& exception){
+        //* std::length_error inherits from the interface std::exception and also has its own version of .what()
+        std::cout << "specifically handle std::length_error differently, message: " << exception.what() << std::endl;
+    }
+    //? This handler will catch std::exception and all the derived exceptions too
+    catch (const std::exception& exception)
+    {
+        //? .what() is the virtual function from the std::exception interface
+        std::cerr << "Standard exception: " << exception.what() << '\n';
+    }
+    
+    try
+    {
+        //? std::runtime_error is a popular option when throwing a standard library exception because it has a constructor that accepts a customizable message
+        //* std::runtime_error is inside the library <stdexception>
+        throw std::runtime_error("raised runtime error");
+    }
+    //? catching exception with the base class
+    catch (const std::exception& exception){
+        std::cout << exception.what() << std::endl;
+    }
 
 
     return 0;
