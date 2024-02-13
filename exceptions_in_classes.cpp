@@ -27,6 +27,13 @@ class BaseException: public std::exception {
         const std::string& getError() const { return m_description; }
         //* https://en.cppreference.com/w/cpp/error/exception/what
         const char* what() const noexcept override { return m_description.c_str();}
+
+    //! Exception classes should be copyiable, because objects being thrown are typically temporary or local variables located on the stack
+    //! But when handling exceptions, the compiler has to unwind the function call stack destroying all local variables when unwinding
+    //! Therefore the compiler must be able to copy the exception object to an unsepcified memory reserved for exception handling by the compiler
+    //? smart compilers may be able to perform move or elide the copy altogether
+
+    // BaseException(const BaseException&) = delete //! The compiler will complain that an exception throwing an object of class BaseException is not copyable
 };
 
 //? custom exception inheriting from std::runtime_error
