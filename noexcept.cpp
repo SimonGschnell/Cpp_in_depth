@@ -36,13 +36,25 @@ void nonThrowingFunction() noexcept {
     std::cout << "Non throwing function" << '\n';
 }
 
+//? normal functions are implicitly potentially throwing functions
+void normalFunction(){}
+
 int main(){
+
+    //? Best practice
+    //* Make constructors and overloaded assignment operators noexcept when you can
+    //* Use noexcept on other functions to express a no-fail or no-throw guarantee.
+
+    //? noexcept can be used as an expression to check whether a function is a non-throwing function
+    std::cout << std::boolalpha;
+    std::cout << noexcept(3+3) << '\n'; //* non-throwing 
+    std::cout << noexcept(normalFunction()) << '\n'; //* potentially throwing 
+    std::cout << noexcept(throwingFunction()) << '\n'; //* potentially throwing 
+    std::cout << noexcept(nonThrowingFunction()) << '\n'; //* non-throwing 
 
     greeting();
     nonThrowingFunction();
     throwingNoExceptFunction();
-
-
 
     return 0;
 }
