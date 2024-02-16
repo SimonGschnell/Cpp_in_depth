@@ -9,6 +9,9 @@
 //* if the object that is going to be moved has a noexcept move constructor
 //* if the object that is going to be moved has only a move constructor and no copy constructor even if the move constructor isn't noexcept
 
+//~ classes like std::vector use std::move_if_noexcept and can be optimized if they hold objects that have a non-throwing noexcept move constructor
+//* if the std::vector holds object that don't have a non-throwing noexcept move constructor, then the objects have to be copied around
+
 class NoExceptMoveClass{
     private:
         std::unique_ptr<int> m_value{};
